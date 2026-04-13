@@ -1,0 +1,45 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2506                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _615aae61-20250627 OPENFOAM=2506 version=2506
+Arch   : "LSB;label=32;scalar=64"
+Exec   : changeDictionary -region rock
+Date   : Apr 13 2026
+Time   : 15:51:31
+Host   : 858544ff041d
+PID    : 427
+I/O    : uncollated
+Case   : /home/openfoam/run/turku-AMK-borehole/v113
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh rock for time = 0
+
+Read dictionary changeDictionaryDict with replacements for dictionaries 2(T p)
+Reading polyMesh/boundary file to extract patch names
+Loaded dictionary boundary with entries 6(rock_inlet rock_outlet rock_outer rock_wedge1 rock_wedge2 rock_to_water)
+Extracted patch groups:
+    group wall with patches 1(rock_to_water)
+    group wedge with patches 2(rock_wedge1 rock_wedge2)
+Replacing entries in dictionary T
+Loading dictionary T
+Loaded dictionary T with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict T
+Replacing entries in dictionary p
+Loading dictionary p
+Loaded dictionary p with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict p
+
+End
+

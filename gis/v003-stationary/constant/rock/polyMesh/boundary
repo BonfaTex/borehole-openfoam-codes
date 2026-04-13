@@ -1,0 +1,65 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2506                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       polyBoundaryMesh;
+    location    "constant/rock/polyMesh";
+    object      boundary;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+6
+(
+    rock_inlet
+    {
+        type            patch;
+        nFaces          30;
+        startFace       11770;
+    }
+    rock_outlet
+    {
+        type            patch;
+        nFaces          30;
+        startFace       11800;
+    }
+    rock_outer
+    {
+        type            patch;
+        nFaces          200;
+        startFace       11830;
+    }
+    rock_wedge1
+    {
+        type            wedge;
+        inGroups        1(wedge);
+        nFaces          6000;
+        startFace       12030;
+    }
+    rock_wedge2
+    {
+        type            wedge;
+        inGroups        1(wedge);
+        nFaces          6000;
+        startFace       18030;
+    }
+    rock_to_water
+    {
+        type            mappedWall;
+        inGroups        1(wall);
+        nFaces          200;
+        startFace       24030;
+        sampleMode      nearestPatchFace;
+        sampleRegion    water;
+        samplePatch     water_to_rock;
+    }
+)
+
+// ************************************************************************* //

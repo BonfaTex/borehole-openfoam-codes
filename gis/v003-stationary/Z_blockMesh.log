@@ -1,0 +1,97 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2506                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _615aae61-20250627 OPENFOAM=2506 version=2506
+Arch   : "LSB;label=32;scalar=64"
+Exec   : blockMesh
+Date   : Apr 13 2026
+Time   : 15:51:30
+Host   : 858544ff041d
+PID    : 421
+I/O    : uncollated
+Case   : /home/openfoam/run/turku-AMK-borehole/v113
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Creating block mesh from "system/blockMeshDict"
+Creating block edges
+No non-planar block faces defined
+Creating topology blocks
+
+Creating topology patches - from boundary section
+
+Creating block mesh topology
+
+Check topology
+
+	Basic statistics
+		Number of internal faces : 1
+		Number of boundary faces : 10
+		Number of defined boundary faces : 10
+		Number of undefined boundary faces : 0
+	Checking patch -> block consistency
+
+
+Detected collapsed blocks - using merge points instead of merge topology
+
+Creating block offsets
+Creating merge list (geometric search)...
+
+Creating polyMesh from blockMesh
+Creating points with scale (1 1 1)
+    Block 0 cell size :
+        i : 0.0088462444 .. 0.0066346833
+        j : 0 .. 0
+        k : 0.1 .. 0.1
+
+    Block 1 cell size :
+        i : 0.10000018 .. 0.10000018
+        j : 0.00872 .. 0.00872
+        k : 0.1 .. 0.1
+
+Creating cells
+Creating patches
+Adding cell zones
+    0	water
+    1	rock
+No patch pairs to merge
+
+Writing polyMesh with 2 cellZones
+----------------
+Mesh Information
+----------------
+  boundingBox: (0 0 -0.13522) (20 3.09705 0.13522)
+  nPoints: 17487
+  nCells: 8600
+  nFaces: 34443
+  nInternalFaces: 16957
+----------------
+Cell Zones
+----------------
+  zone 0 (size: 2600) name: water
+  zone 1 (size: 6000) name: rock
+----------------
+Patches
+----------------
+  patch 0 (start: 16957 size: 13) name: water_inlet
+  patch 1 (start: 16970 size: 30) name: rock_inlet
+  patch 2 (start: 17000 size: 13) name: water_outlet
+  patch 3 (start: 17013 size: 30) name: rock_outlet
+  patch 4 (start: 17043 size: 200) name: rock_outer
+  patch 5 (start: 17243 size: 2600) name: water_wedge1
+  patch 6 (start: 19843 size: 2600) name: water_wedge2
+  patch 7 (start: 22443 size: 6000) name: rock_wedge1
+  patch 8 (start: 28443 size: 6000) name: rock_wedge2
+  patch 9 (start: 34443 size: 0) name: axis
+
+End
+

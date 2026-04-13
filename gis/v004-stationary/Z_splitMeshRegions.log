@@ -1,0 +1,111 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2506                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _615aae61-20250627 OPENFOAM=2506 version=2506
+Arch   : "LSB;label=32;scalar=64"
+Exec   : splitMeshRegions -cellZones -overwrite
+Date   : Apr 13 2026
+Time   : 16:02:40
+Host   : 858544ff041d
+PID    : 516
+I/O    : uncollated
+Case   : /home/openfoam/run/turku-AMK-borehole/v213
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Creating single patch per inter-region interface.
+
+Trying to match regions to existing cell zones.
+
+
+Number of regions:2
+
+Writing region per cell file (for manual decomposition) to "/home/openfoam/run/turku-AMK-borehole/v213/constant/cellToRegion"
+
+Writing region per cell as volScalarField to "/home/openfoam/run/turku-AMK-borehole/v213/0/cellToRegion"
+
+Region	Cells
+------	-----
+0	1000
+1	2500
+
+Region	Zone	Name
+------	----	----
+0	(0)	water
+1	(1)	rock
+
+Sizes of interfaces between regions:
+
+Interface	Region	Region	Faces
+---------	------	------	-----
+0		0	1	100
+
+Reading volScalarField: T alphat cellToRegion epsilon k nut p p_rgh rho
+Reading volVectorField: U
+
+
+Adding patches
+
+
+Adding patches
+
+For interface between region water and rock added patches
+    10	water_to_rock
+    11	rock_to_water
+
+Region 0
+-------- 
+Creating mesh for region 0 water
+Mapping fields
+Mapping field T
+Mapping field alphat
+Mapping field cellToRegion
+Mapping field epsilon
+Mapping field k
+Mapping field nut
+Mapping field p
+Mapping field p_rgh
+Mapping field rho
+Mapping field U
+Deleting empty patches
+Writing new mesh
+Writing addressing to base mesh
+Writing map pointRegionAddressing from region0 points back to base mesh.
+Writing map faceRegionAddressing from region0 faces back to base mesh.
+Writing map cellRegionAddressing from region0 cells back to base mesh.
+Writing map boundaryRegionAddressing from region0 boundary back to base mesh.
+
+Region 1
+-------- 
+Creating mesh for region 1 rock
+Mapping fields
+Mapping field T
+Mapping field alphat
+Mapping field cellToRegion
+Mapping field epsilon
+Mapping field k
+Mapping field nut
+Mapping field p
+Mapping field p_rgh
+Mapping field rho
+Mapping field U
+Deleting empty patches
+Writing new mesh
+Writing addressing to base mesh
+Writing map pointRegionAddressing from region1 points back to base mesh.
+Writing map faceRegionAddressing from region1 faces back to base mesh.
+Writing map cellRegionAddressing from region1 cells back to base mesh.
+Writing map boundaryRegionAddressing from region1 boundary back to base mesh.
+End
+

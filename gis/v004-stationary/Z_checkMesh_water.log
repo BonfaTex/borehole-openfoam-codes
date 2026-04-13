@@ -1,0 +1,102 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2506                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _615aae61-20250627 OPENFOAM=2506 version=2506
+Arch   : "LSB;label=32;scalar=64"
+Exec   : checkMesh -region water
+Date   : Apr 13 2026
+Time   : 16:02:41
+Host   : 858544ff041d
+PID    : 517
+I/O    : uncollated
+Case   : /home/openfoam/run/turku-AMK-borehole/v213
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Check mesh...
+
+Time = 0
+
+Mesh stats water
+    points:           2121
+    internal points:  0
+    faces:            4010
+    internal faces:   1890
+    cells:            1000
+    faces per cell:   5.9
+    boundary patches: 5
+    point zones:      0
+    face zones:       0
+    cell zones:       2
+
+Overall number of cells of each type:
+    hexahedra:     900
+    prisms:        100
+    wedges:        0
+    pyramids:      0
+    tet wedges:    0
+    tetrahedra:    0
+    polyhedra:     0
+
+Checking topology...
+    Boundary definition OK.
+    Cell to face addressing OK.
+    Point usage OK.
+    Upper triangular ordering OK.
+    Face vertices OK.
+    Number of regions: 1 (OK).
+
+Checking patch topology for multiply connected surfaces...
+    Patch               Faces    Points     Surface topology
+    water_inlet         10       21       ok (non-closed singly connected)  
+    water_outlet        10       21       ok (non-closed singly connected)  
+    water_wedge1        1000     1111     ok (non-closed singly connected)  
+    water_wedge2        1000     1111     ok (non-closed singly connected)  
+    water_to_rock       100      202      ok (non-closed singly connected)  
+    ".*"                2120     2121     ok (closed singly connected)      
+
+
+Checking faceZone topology for multiply connected surfaces...
+    No faceZones found.
+
+Checking basic cellZone addressing...
+    CellZone            Cells        Points       Volume       BoundingBox
+    water               1000         2121         0.00871128   (0 0 -0.00436) (20 0.0999 0.00436)
+    rock                0            0            0            (1e+150 1e+150 1e+150) (-1e+150 -1e+150 -1e+150)
+
+Checking basic pointZone addressing...
+    No pointZones found.
+
+Checking geometry...
+    Overall domain bounding box (0 0 -0.00436) (20 0.0999 0.00436)
+    Mesh has 2 geometric (non-empty/wedge) directions (1 1 0)
+    Mesh has 3 solution (non-empty) directions (1 1 1)
+    Wedge water_wedge1 with angle 2.4990107 degrees
+    Wedge water_wedge2 with angle 2.4990107 degrees
+    All edges aligned with or perpendicular to non-empty directions.
+    Boundary openness (-1.1564074e-20 -1.4833177e-16 3.6939078e-15) OK.
+    Max cell openness = 1.6254291e-16 OK.
+    Max aspect ratio = 31.019448 OK.
+    Minimum face area = 8.7160845e-06. Maximum face area = 0.0028290683.  Face area magnitudes OK.
+    Min volume = 1.7432169e-06. Max volume = 1.1341788e-05.  Total volume = 0.00871128.  Cell volumes OK.
+    Mesh non-orthogonality Max: 0 average: 0
+    Non-orthogonality check OK.
+    Face pyramids OK.
+    Max skewness = 0.33079847 OK.
+    Coupled point location match (average 0) OK.
+
+Mesh OK.
+
+End
+

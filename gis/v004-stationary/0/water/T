@@ -1,0 +1,53 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2506                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       volScalarField;
+    location    "0/water";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [ 0 0 0 1 0 0 0 ];
+
+internalField   uniform 279.15;
+
+boundaryField
+{
+    water_inlet
+    {
+        type            fixedValue;
+        value           uniform 333.15;
+    }
+    water_outlet
+    {
+        type            zeroGradient;
+        value           uniform 300;
+    }
+    water_wedge1
+    {
+        type            wedge;
+    }
+    water_wedge2
+    {
+        type            wedge;
+    }
+    water_to_rock
+    {
+        type            compressible::turbulentTemperatureRadCoupledMixed;
+        value           uniform 279.15;
+        Tnbr            T;
+        kappaMethod     fluidThermo;
+    }
+}
+
+
+// ************************************************************************* //

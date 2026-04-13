@@ -1,0 +1,128 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2506                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      changeDictionaryDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+U
+{
+    internalField   uniform (0.25 0 0);
+    boundaryField
+    {
+        ".*" { type fixedValue; value uniform (0 0 0); }
+        water_inlet { type fixedValue; value uniform (0.25 0 0); }
+        water_outlet { type zeroGradient; }
+        water_to_rock { type noSlip; }
+        
+        "(water_wedge1|water_wedge2)" { type wedge; }
+    }
+}
+
+T
+{
+    internalField   uniform 279.15;
+    boundaryField
+    {
+        ".*" { type zeroGradient; }
+        water_inlet { type fixedValue; value uniform 333.15; }
+        water_outlet { type zeroGradient; }
+        water_to_rock { type compressible::turbulentTemperatureRadCoupledMixed; Tnbr T; kappaMethod fluidThermo; value uniform 279.15; }
+        
+        "(water_wedge1|water_wedge2)" { type wedge; }
+    }
+}
+
+p_rgh
+{
+    internalField   uniform 1e5;
+    boundaryField
+    {
+        ".*" { type fixedFluxPressure; value uniform 1e5; }
+        water_inlet { type fixedFluxPressure; value uniform 1e5; }
+        water_outlet { type fixedValue; value uniform 1e5; }
+        water_to_rock { type fixedFluxPressure; value uniform 1e5; }
+        
+        "(water_wedge1|water_wedge2)" { type wedge; }
+    }
+}
+
+p
+{
+    internalField   uniform 1e5;
+    boundaryField
+    {
+        // Tutto è calcolato in automatico a partire da p_rgh...
+        ".*" { type calculated; value uniform 1e5; }
+        
+        // ...tranne i piani di simmetria!
+        "(water_wedge1|water_wedge2)" { type wedge; }
+    }
+}
+
+epsilon
+{
+    internalField   uniform 0.0001;
+    boundaryField
+    {
+        ".*" { type calculated; value uniform 0.0001; }
+        water_inlet { type turbulentMixingLengthDissipationRateInlet; mixingLength 0.005; value uniform 0.0001; }
+        water_outlet { type inletOutlet; inletValue uniform 0.0001; value uniform 0.0001; }
+        water_to_rock { type epsilonWallFunction; value uniform 0.0001; }
+        
+        "(water_wedge1|water_wedge2)" { type wedge; }
+    }
+}
+
+k
+{
+    internalField   uniform 0.0001;
+    boundaryField
+    {
+        ".*" { type calculated; value uniform 0.0001; }
+        water_inlet { type turbulentIntensityKineticEnergyInlet; intensity 0.05; value uniform 0.0001; }
+        water_outlet { type inletOutlet; inletValue uniform 0.0001; value uniform 0.0001; }
+        water_to_rock { type kqRWallFunction; value uniform 0.0001; }
+        
+        "(water_wedge1|water_wedge2)" { type wedge; }
+    }
+}
+
+alphat
+{
+    internalField   uniform 0;
+    boundaryField
+    {
+        ".*" { type calculated; value uniform 0; }
+        water_inlet { type calculated; value uniform 0; }
+        water_outlet { type calculated; value uniform 0; }
+        water_to_rock { type compressible::alphatWallFunction; value uniform 0; Prt 0.85; }
+        
+        "(water_wedge1|water_wedge2)" { type wedge; }
+    }
+}
+
+nut
+{
+    internalField   uniform 0;
+    boundaryField
+    {
+        ".*" { type calculated; value uniform 0; }
+        water_inlet { type calculated; value uniform 0; }
+        water_outlet { type calculated; value uniform 0; }
+        water_to_rock { type nutkWallFunction; value uniform 0; }
+        
+        "(water_wedge1|water_wedge2)" { type wedge; }
+    }
+}
+
+// ************************************************************************* // 

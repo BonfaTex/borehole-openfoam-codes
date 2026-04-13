@@ -1,0 +1,106 @@
+#!/bin/sh
+cd "${0%/*}" || exit  
+
+echo "========================================"
+echo "Cleaning directory..."
+echo "========================================"
+
+./Allclean
+
+echo "========================================"
+echo "Starting mesh preparation for v013 2D-axy case..."
+echo "========================================"
+
+rm -rf 0
+cp -r 0.orig 0
+
+echo "========================================"
+echo "Using blockMesh..."
+echo "========================================"
+
+if blockMesh > Z_blockMesh.log 2>&1 ; then
+    echo "✅  - blockMesh completed."
+else
+    echo "❌  - blockMesh FAILED. Check Z_blockMesh.log"
+    exit 1
+fi
+
+if checkMesh > Z_checkMesh.log 2>&1 ; then
+    echo "✅  - checkMesh completed."
+else
+    echo "❌  - checkMesh FAILED. Check Z_checkMesh.log"
+    exit 1
+fi
+
+echo "========================================"
+echo "Splitting mesh regions and fields..."
+echo "========================================"
+
+if splitMeshRegions -cellZones -overwrite > Z_splitMeshRegions.log 2>&1 ; then
+    echo "✅  - splitMeshRegions completed."
+else
+    echo "❌  - splitMeshRegions FAILED. Check Z_splitMeshRegions.log"
+    exit 1
+fi
+
+echo "========================================"
+echo "Checking mesh quality..."
+echo "========================================"
+
+if checkMesh -region water > Z_checkMesh_water.log 2>&1 ; then
+    echo "✅  - checkMesh (water) completed."
+else
+    echo "❌  - checkMesh (water) FAILED. Check Z_checkMesh_water.log"
+    exit 1
+fi
+if checkMesh -region rock > Z_checkMesh_rock.log 2>&1 ; then
+    echo "✅  - checkMesh (rock) completed."
+else
+    echo "❌  - checkMesh (rock) FAILED. Check Z_checkMesh_rock.log"
+    exit 1
+fi
+
+echo "========================================"
+echo "Applying boundary dictionaries..."
+echo "========================================"
+
+if changeDictionary -region water > Z_changeDictionary_water.log 2>&1 ; then
+    echo "✅  - changeDictionary (water) completed."
+else
+    echo "❌  - changeDictionary (water) FAILED. Check Z_changeDictionary_water.log"
+    exit 1
+fi
+
+if changeDictionary -region rock > Z_changeDictionary_rock.log 2>&1 ; then
+    echo "✅  - changeDictionary (rock) completed."
+else
+    echo "❌  - changeDictionary (rock) FAILED. Check Z_changeDictionary_rock.log"
+    exit 1
+fi
+
+echo "========================================"
+echo "Pre-processing completed successfully."
+echo "========================================"
+echo " "
+echo "🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀"
+echo " "
+echo "========================================"
+echo "Running chtMultiRegionSimpleFoam steady-state solver..."
+echo "========================================"
+
+chtMultiRegionSimpleFoam 2>&1 | tee Z_chtMultiRegionSimpleFoam.log | grep --line-buffered -E "^Time =|^ExecutionTime"
+
+# Check for convergence or errors
+if grep -q "End" Z_chtMultiRegionSimpleFoam.log; then
+    echo "✅  - solver finished successfully."
+    echo "========================================"
+    echo "Creating Paraview file..."
+    touch case1.foam
+    echo "✅  - All complete! You can now open case1.foam in Paraview."
+    echo "✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅"
+    echo "========================================"
+else
+    echo "❌  - Solver failed or did not converge. Checking log for Fatal Errors..."
+    grep -i "Fatal" Z_chtMultiRegionSimpleFoam.log
+    echo "========================================"
+fi

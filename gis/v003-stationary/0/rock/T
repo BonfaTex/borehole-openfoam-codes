@@ -1,0 +1,70 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2506                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       volScalarField;
+    location    "0/rock";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [ 0 0 0 1 0 0 0 ];
+
+internalField   uniform 279.15;
+
+boundaryField
+{
+    rock_inlet
+    {
+        type            externalWallHeatFluxTemperature;
+        value           uniform 279.15;
+        mode            coefficient;
+        Ta              uniform 283.15;
+        h               uniform 10;
+        kappaMethod     solidThermo;
+    }
+    rock_outlet
+    {
+        type            externalWallHeatFluxTemperature;
+        value           uniform 279.15;
+        mode            coefficient;
+        Ta              uniform 279.15;
+        h               uniform 0.2;
+        kappaMethod     solidThermo;
+    }
+    rock_outer
+    {
+        type            externalWallHeatFluxTemperature;
+        value           uniform 279.15;
+        mode            coefficient;
+        Ta              uniform 279.15;
+        h               uniform 0.2;
+        kappaMethod     solidThermo;
+    }
+    rock_wedge1
+    {
+        type            wedge;
+    }
+    rock_wedge2
+    {
+        type            wedge;
+    }
+    rock_to_water
+    {
+        type            compressible::turbulentTemperatureRadCoupledMixed;
+        value           uniform 279.15;
+        Tnbr            T;
+        kappaMethod     solidThermo;
+    }
+}
+
+
+// ************************************************************************* //
