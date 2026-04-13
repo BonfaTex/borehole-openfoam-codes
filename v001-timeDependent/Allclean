@@ -1,0 +1,10 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+
+echo "Cleaning ..."
+rm -f *log
+rm -f *.foam
+rm -rf [1-9]*
+rm -rf postProcessing
+echo "Cleaned."
+

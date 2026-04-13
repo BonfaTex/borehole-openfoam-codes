@@ -1,0 +1,31 @@
+#!/bin/sh
+cd "${0%/*}" || exit  
+
+echo "========================================"
+echo "Postprocessing..."
+echo "========================================"
+
+echo "Calculating wall heat flux at latest time step..."
+
+chtMultiRegionFoam -postProcess -func wallHeatFlux -region water -latestTime > Z_wallHeatFlux.log 2>&1
+
+echo "✅  - Check Z_wallHeatFlux.log for results."
+
+# Definiamo i percorsi dei file
+INPUT_DAT="postProcessing/rock/rockAverageT/0/volFieldValue.dat"
+EXPORT_DAT="postProcessing/tempHistory_export.dat"
+
+echo "Calculating average temperature of rock region at latest time step..."
+LAST_TEMP=$(tail -n 1 "$INPUT_DAT" | awk '{print $2}')
+echo "✅  - Latest Temperature = $LAST_TEMP K"
+
+echo "Exporting data for plotting..."
+
+echo "0            	    2.79150000e+02" > "$EXPORT_DAT"
+grep -v "^#" "$INPUT_DAT" >> "$EXPORT_DAT"
+
+echo "✅  - Data successfully exported to $EXPORT_DAT"
+
+echo "========================================"
+echo "✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅"
+echo "========================================"

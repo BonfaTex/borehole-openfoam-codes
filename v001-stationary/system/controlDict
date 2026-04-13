@@ -1,0 +1,47 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2506                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     chtMultiRegionSimpleFoam;
+startFrom       startTime;
+startTime       0;
+stopAt          endTime;
+endTime         30000;
+deltaT          1;
+writeControl    timeStep;
+writeInterval   1000;
+purgeWrite      0;
+writeFormat     ascii;
+writePrecision  8;
+writeCompression off;
+timeFormat      general;
+timePrecision   6;
+runTimeModifiable true;
+
+functions
+{
+    rockAverageT
+    {
+        type            volFieldValue;
+        libs            (fieldFunctionObjects);
+        region          rock;            // Applica il calcolo solo alla roccia
+        log             true;            // Stampa il valore a schermo
+        writeControl    timeStep;        // Salva in base alle iterazioni
+        writeInterval   1000;             // Salva un punto ogni ... iterazioni
+        writeFields     false;           // Non salvare il campo 3D, solo il numero
+        operation       volAverage;      // Media pesata sul volume
+        fields          (T);             // Calcola la T media
+    }
+}

@@ -1,0 +1,3 @@
+# Wall heat-flux
+# Time          	patch           	min             	max             	integral        
+30000           	water_to_rock	-1.09294966e+03	-2.02488239e+02	-4.44193486e+01

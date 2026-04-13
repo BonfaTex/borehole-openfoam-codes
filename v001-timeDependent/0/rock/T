@@ -1,0 +1,70 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2506                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       volScalarField;
+    location    "0/rock"; // NOTA: ho cambiato "30000/rock" in "0/rock" per precisione
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+// IL TRUCCO È QUI: Sostituisci tutta la lista con questo
+internalField   uniform 279.15;
+
+boundaryField
+{
+    rock_inlet
+    {
+        type            externalWallHeatFluxTemperature;
+        mode            coefficient;
+        Ta              uniform 283.15; // T_air = 10 C
+        h               uniform 10;     // h_air = 10 W/m2/C
+        value           uniform 279.15; // Valore iniziale
+        kappaMethod     solidThermo;
+    }
+    rock_outlet
+    {
+        type            externalWallHeatFluxTemperature;
+        mode            coefficient;
+        Ta              uniform 279.15; // T_ground = 6 C
+        h               uniform 0.2;    // h_bulk = 0.2 W/m2/C
+        value           uniform 279.15;
+        kappaMethod     solidThermo;
+    }
+    rock_outer
+    {
+        type            externalWallHeatFluxTemperature;
+        mode            coefficient;
+        Ta              uniform 279.15;
+        h               uniform 0.2;
+        value           uniform 279.15;
+        kappaMethod     solidThermo;
+    }
+    rock_wedge1
+    {
+        type            wedge;
+    }
+    rock_wedge2
+    {
+        type            wedge;
+    }
+    rock_to_water
+    {
+        // QUESTA È LA MAGIA CHE NON DEVI TOCCARE
+        type            compressible::turbulentTemperatureRadCoupledMixed;
+        Tnbr            T;
+        kappaMethod     solidThermo;
+        value           uniform 279.15;
+    }
+}
+// ************************************************************************* //

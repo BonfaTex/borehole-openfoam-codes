@@ -1,0 +1,54 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2506                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     chtMultiRegionFoam;
+
+startFrom       startTime; 
+startTime       0;
+
+stopAt          endTime;
+endTime         63072000; // 730 days
+
+
+deltaT          3600;     // 1 hour
+
+
+writeControl    runTime;
+writeInterval   864000;   // save every 10 days
+purgeWrite      1;        // take only last file
+
+writeFormat     ascii;
+writePrecision  8;
+writeCompression off;
+timeFormat      general;
+timePrecision   6;
+runTimeModifiable true;
+
+functions
+{
+    rockAverageT
+    {
+        type            volFieldValue;
+        libs            (fieldFunctionObjects);
+        region          rock;            
+        log             true;            
+        writeControl    timeStep;        
+        writeInterval   1;               // save every hour
+        writeFields     false;           
+        operation       volAverage;      
+        fields          (T);             
+    }
+}

@@ -1,0 +1,21 @@
+#!/bin/sh
+cd "${0%/*}" || exit  
+
+echo "========================================"
+echo "Postprocessing..."
+echo "========================================"
+
+echo "Calculating wall heat flux at latest time step..."
+
+chtMultiRegionSimpleFoam -postProcess -func wallHeatFlux -region water -latestTime > Z_wallHeatFlux.log 2>&1
+
+echo "✅  - Check Z_wallHeatFlux.log for results."
+
+echo "Calculating yPlus at latest time step..."
+
+chtMultiRegionSimpleFoam -postProcess -func yPlus -region water -latestTime > Z_yPlus.log 2>&1
+
+echo "✅  - Check Z_yPlus.log for results."
+
+echo "Calculating average temperature of rock region at latest time step..."
+echo "✅  - Temperature = $(tail -n 1 postProcessing/rock/rockAverageT/0/volFieldValue.dat) K"

@@ -1,0 +1,53 @@
+#!/bin/sh
+cd "${0%/*}" || exit  
+
+echo "========================================"
+echo "Cleaning directory..."
+echo "========================================"
+
+./Allclean
+
+echo "========================================"
+echo "Starting mesh preparation..."
+echo "========================================"
+
+echo "✅  - Ready."
+
+echo "========================================"
+echo "Checking mesh quality..."
+echo "========================================"
+
+if checkMesh -region water > Z_checkMesh_water.log 2>&1 ; then
+    echo "✅  - checkMesh (water) completed."
+else
+    echo "❌  - checkMesh (water) FAILED. Check Z_checkMesh_water.log"
+    exit 1
+fi
+if checkMesh -region rock > Z_checkMesh_rock.log 2>&1 ; then
+    echo "✅  - checkMesh (rock) completed."
+else
+    echo "❌  - checkMesh (rock) FAILED. Check Z_checkMesh_rock.log"
+    exit 1
+fi
+
+echo "========================================"
+echo "Running chtMultiRegionFoam olver..."
+echo "========================================"
+
+chtMultiRegionFoam 2>&1 | tee Z_chtMultiRegionFoam.log | grep --line-buffered -E "^Time =|^ExecutionTime"
+
+# Check for convergence or errors
+if grep -q "End" Z_chtMultiRegionFoam.log; then
+    echo "✅  - solver finished successfully."
+    echo "========================================"
+    echo "Creating Paraview file..."
+    touch case1.foam
+    echo "✅  - All complete! You can now open case1.foam in Paraview."
+    echo "========================================"
+    echo "✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅"
+    echo "========================================"
+else
+    echo "❌  - Solver failed or did not converge. Checking log for Fatal Errors..."
+    grep -i "Fatal" Z_chtMultiRegionFoam.log
+    echo "========================================"
+fi

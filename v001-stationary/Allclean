@@ -1,0 +1,17 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+
+echo "Cleaning ..."
+rm -rf 0
+rm -rf constant/polyMesh
+rm -rf constant/water/polyMesh
+rm -rf constant/rock/polyMesh
+rm -rf constant/3D-borehole.msh
+rm -f constant/cellToRegion
+rm -f constant/check-mesh.txt
+rm -f *log
+rm -f *.foam
+rm -rf [1-9]*
+rm -rf postProcessing
+echo "Cleaned."
+
